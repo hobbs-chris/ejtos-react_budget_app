@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const Budget = () => {
-    const { budget, updateBudget } = useContext(AppContext);
+    const { budget, updateBudget, currency } = useContext(AppContext);
     const { expenses } = useContext(AppContext);
     const[editableBudget, setEditableBudget] = useState(budget); // Add a state for editable budget
 
@@ -30,7 +30,7 @@ const Budget = () => {
     return (
         <div className='alert alert-secondary'>
             <form onSubmit={handleSubmit}>
-            <span>Budget: £
+            <span>Budget: {currency}
                 <input
                     type='number'
                     step='10'
