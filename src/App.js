@@ -9,7 +9,7 @@ import ExpenseTotal from './components/ExpenseTotal';
 import ExpenseList from './components/ExpenseList';
 import ExpenseItem from './components/ExpenseItem';
 import AllocationForm from './components/AllocationForm';
-import CurrencyType from './components/CurrencyType';
+import CurrencyType from './components/Currency';
 
 // Add code to import the other components here under
 
