@@ -1,44 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const Budget = () => {
-    const { budget, updateBudget, currency } = useContext(AppContext);
-    const { expenses } = useContext(AppContext);
-    const[editableBudget, setEditableBudget] = useState(budget); // Add a state for editable budget
+    const { budget, dispatch ,expenses , currency } = useContext(AppContext);
 
-    const handleBudgetChange = (event) => {
-        const newBudget = parseInt(event.target.value);
-        const expenseTotal = expenses.reduce((total, item) => {
-            return (total += item.cost);
+    const changeBudget = (value) => {
+        const totalExpenses = expenses.reduce((total, item) => {
+            return (total += item.cost); 
         }, 0);
-        setEditableBudget(event.target.value); // Update the state when the input changes value
-        if (newBudget > 20000) {
-            alert("Budget cannot exceed 20000");
-        } else if (newBudget < expenseTotal) {
-            alert('Budget cannot be less that total expenses');
+
+        if(value<totalExpenses) {
+            alert("Budget cannot be lower than what has already been allocated");
         } else {
-            setEditableBudget(newBudget);
-        }
-    };
+            dispatch({
+                type: 'SET_BUDGET' ,
+                payload: value,
+            })
+            }
+    }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        updateBudget(editableBudget); // Update the context with the new budget value
-      };
-
-    
     return (
         <div className='alert alert-secondary'>
-            <form onSubmit={handleSubmit}>
-            <span>Budget: {currency}
-                <input
-                    type='number'
-                    step='10'
-                    value={editableBudget}
-                    onChange={handleBudgetChange}
-                />
-            </span>
-            </form>
+            <span>Budget: {currency}</span>
+            <input type="number" step="10" value={budget} onInput={(event)=>changeBudget(event.target.value)}></input>
         </div>
     );
 };
