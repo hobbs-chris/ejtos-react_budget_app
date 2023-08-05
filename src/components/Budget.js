@@ -4,17 +4,19 @@ import { AppContext } from '../context/AppContext';
 const Budget = () => {
     const { budget, dispatch ,expenses , currency } = useContext(AppContext);
 
-    const changeBudget = (value) => {
+    const changeBudget = (val) => {
         const totalExpenses = expenses.reduce((total, item) => {
             return (total += item.cost); 
         }, 0);
 
-        if(value<totalExpenses) {
+        if (val >= 20000) {
+            alert("Budget cannot exceed " + (currency) + "20000");
+        }else if (val <totalExpenses) {
             alert("Budget cannot be lower than what has already been allocated");
         } else {
             dispatch({
                 type: 'SET_BUDGET' ,
-                payload: value,
+                payload: val,
             })
             }
     }
